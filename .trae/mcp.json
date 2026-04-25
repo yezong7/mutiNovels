@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "memorymesh": {
+      "command": "node",
+      "args": ["g:\\tmpRepo\\memorymesh\\dist\\index.js"]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "g:\\tmpRepo\\mutiNovels"
+      ]
+    }
+  }
+}
