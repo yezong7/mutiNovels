@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 mutiNovels is a file-driven multi-project novel creation system. It uses `.md` files to manage settings, outlines, progress, and content with a four-phase writing workflow and strict consistency validation.
 
+**Rule Files**: `.trae/rules/novelworkflow.md` defines the complete workflow (auto-injected). `.trae/rules/templates.md` defines file structure templates (auto-injected). `.trae/rulelog.md` contains violation cases (read on demand, not auto-injected).
+
 ## Architecture
 
 ```
@@ -27,11 +29,37 @@ authors/
 └── chapters/chapter_XX.md
 ```
 
+## Initialization Workflow
+
+When user inputs `【初始化】`:
+1. Read `.trae/rules/templates.md` to get file structure templates
+2. Create `chapters/` directory
+3. Write `bible.md` (templates.md §1), `outline.md` (templates.md §4), `state.md` (templates.md §2), `rules.md` (templates.md §5)
+4. Create `chapters/chapter_01.md` empty file
+5. Ask user to fill bible.md/outline.md or provide story concept; ask for author style file in rules.md §7
+
+## Layered Loading Strategy
+
+`【加载上下文】` loads files in three layers to avoid context overflow:
+
+| Layer | Files | When |
+|-------|-------|------|
+| **必读层** | state.md, rulelog.md | Always |
+| **阶段层** | Varies by current stage (see novelworkflow.md §指令1) | Based on stage |
+| **章节层** | Last 500 words of current chapter | Always |
+
+Stage-specific loading:
+- 空闲: outline 卷章+伏笔
+- 构思: outline全文 + bible人物/势力
+- 草稿: outline卷章+偏差 + rules + bible人物/地点/道具
+- 正文: bible全文 + style anchors/samples + outline卷章
+- 润色: style file全文 + rules §8覆盖项
+
 ## Commands
 
 | Command | Trigger | Action |
 |---------|---------|--------|
-| 初始化 | `【初始化】` | Read templates.md → create project structure |
+| 初始化 | `【初始化】` | Read templates.md → create project structure (see Initialization Workflow) |
 | 加载上下文 | `【加载上下文】` | Load state.md + outline chapters → display progress box |
 | 存档下班 | `【存档下班】` | Write chapter → cascade updates (no double-confirm) |
 | 查设定 | `【查设定】名字` | Search bible + chapters for entity appearances |
@@ -54,13 +82,15 @@ authors/
 
 ## Confirmation Mechanism
 
-**Valid**: "确认" "通过" "存档" "定稿" "可以写入"
+**Valid triggers**: "确认" "通过" "存档" "定稿" "可以写入"
 
-**Invalid**: "还行" "不错" "可以" "行" "嗯" "好的" "继续"
+**Invalid**: "还行" "不错" "可以" "行" "嗯" "好的" "继续" (directional approval only)
 
-**Two-step**: User confirms → Assistant asks "收到确认，即将[动作]。确认执行？" → User confirms again → Execute
+**Two-step confirmation**:
+1. User says valid trigger → Assistant responds "收到确认，即将[动作]。确认执行？"
+2. User confirms again → Assistant executes
 
-**Exception**: `【存档下班】` executes directly (user-initiated = confirmed)
+**Exception**: `【存档下班】` executes directly without two-step (user-initiated = confirmed)
 
 ## Critical Rules
 
@@ -92,6 +122,13 @@ authors/
 
 ## Style System
 
-- `rules.md` references style: `风格参考：authors/xxx.md`
-- Style files contain: anchors, samples (A-D), 12-point checklist
-- Project can override specific parameters in rules.md
+- `rules.md §7` references style file: `风格参考：authors/xxx.md`
+- Style files contain: anchors, samples (A-H), 20-point checklist
+- Project can override specific parameters in `rules.md §8`
+
+**Loading priority**: Author style file (base) → rules.md §8 overrides (layered) → Final style
+
+**润色 stage**: Execute style checklist with sample comparison mode:
+- Select 4 paragraphs from polished text matching samples A-D
+- Compare side-by-side with corresponding style samples
+- Mark each checklist item ✅/❌ with location and suggestions
