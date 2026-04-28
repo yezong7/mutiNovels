@@ -97,13 +97,15 @@ Stage-specific loading:
 1. **NEVER** write to chapters without user confirmation
 2. **NEVER** skip reading state.md before writing
 3. **NEVER** enter 构思 without reading outline.md
-4. **ALWAYS** read changelog.md before work; read rulelog.md only if violations exist
+4. **ALWAYS** read changelog.md before work; read rulelog.md (必读层) if violations exist; rulelog_history.md 按需读取
 5. **ALWAYS** use Edit/Write tools for `.md` files
 6. **ALWAYS** perform conflict detection in 构思
 7. **ALWAYS** perform 7-point consistency check in 正文
 8. **ALWAYS** perform 12-point style calibration in 润色
-9. **ALWAYS** confirm before cascade updates in 修订
+9. **ALWAYS** confirm before cascade updates in 修订 (后续章节连锁更新必须经用户确认后才执行)
 10. Append violation cases to rulelog.md when user points out errors
+11. **Memory conflict resolution**: If Memory records conflict with bible.md/state.md, **trust the .md files**
+12. **Style samples must be user-provided or confirmed** - assistant cannot invent style samples
 
 ## Rollback Rules
 
