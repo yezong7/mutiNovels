@@ -6,17 +6,18 @@
     },
     "memorymesh-linux": {
       "command": "node",
-      "args": ["/home/elio/Documents/CodeRepo/memorymesh/apps/server/dist/index.js"]
+      "args": [
+        "/home/elio/Documents/CodeRepo/memorymesh/apps/server/dist/index.js"
+      ],
+      "disabled": true
     },
     "filesystem": {
       "command": "npx",
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "g:\\tmpRepo\\mutiNovels",
-        "/home/elio/Documents/novel/mutiNovels"
-      ],
-      "disabled": true
+        "g:\\tmpRepo\\mutiNovels"
+      ]
     },
     "filesystem-linux": {
       "command": "npx",
@@ -24,7 +25,8 @@
         "-y",
         "@modelcontextprotocol/server-filesystem",
         "/home/elio/Documents/novel/mutiNovels"
-      ]
+      ],
+      "disabled": true
     }
   }
 }
