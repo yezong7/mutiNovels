@@ -1,7 +1,29 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -v \"^--$\")"
+      "Bash(grep -v \"^--$\")",
+      "Bash(claude mcp *)",
+      "Bash(node *)",
+      "Bash(npx -y @modelcontextprotocol/server-filesystem --help)",
+      "Bash(claude skill *)",
+      "Bash(npm list *)",
+      "Bash(npm search *)",
+      "Bash(npm install *)",
+      "Bash(memorymesh --version)",
+      "Bash(claude config *)"
     ]
-  }
+  },
+  "additionalInstructions": [
+    ".trae/rules/novelworkflow.md",
+    ".trae/rules/templates.md"
+  ],
+  "skills": {
+    "init-project": ".trae/skills/init-project/SKILL.md",
+    "load-context": ".trae/skills/load-context/SKILL.md",
+    "new-chapter": ".trae/skills/new-chapter/SKILL.md"
+  },
+  "enabledMcpjsonServers": [
+    "filesystem",
+    "memorymesh"
+  ]
 }

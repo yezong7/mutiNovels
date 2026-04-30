@@ -6,26 +6,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 mutiNovels is a file-driven multi-project novel creation system. It uses `.md` files to manage settings, outlines, progress, and content with a four-phase writing workflow and strict consistency validation.
 
-**Rule Files**: `.trae/rules/novelworkflow.md` defines the complete workflow (auto-injected). `.trae/rules/templates.md` defines file structure templates (auto-injected). `.trae/rulelog.md` contains violation cases (read on demand, not auto-injected).
+**Rule Files**: `.trae/rules/novelworkflow.md` defines the complete workflow (auto-injected). `.trae/rules/templates.md` defines file structure templates (auto-injected). `.trae/rulelog.md` contains violation cases (read on demand, not auto-injected). `.trae/rulelog_history.md` contains rule change history (read on demand).
 
 ## Architecture
 
 ```
-.trae/rules/
-├── novelworkflow.md    ← Global workflow rules (auto-injected)
-├── templates.md        ← File structure templates (auto-injected)
-└── rulelog.md          ← Rule log + violations (read on demand, NOT auto-injected)
+.trae/
+├── rules/
+│   ├── novelworkflow.md    ← Global workflow rules (auto-injected)
+│   └── templates.md        ← File structure templates (auto-injected)
+├── rulelog.md              ← Violation cases (read on demand, NOT auto-injected)
+├── rulelog_history.md      ← Rule change history (read on demand)
+└── skills/
+    ├── init-project/SKILL.md   ← 【初始化】 workflow
+    ├── load-context/SKILL.md   ← 【加载上下文】 layered loading
+    └── new-chapter/SKILL.md    ← 【新建章节】 creation
 
 authors/
-├── cold_hard_school.md ← Shared style template (samples/checklist/anchors)
-└── [custom].md         ← Create new: 【切换风格】 new
+├── _template.md            ← Empty template for new style files
+├── cold_hard_school.md     ← Shared style template (samples/checklist/anchors)
+└── [custom].md             ← Create new: 【切换风格】 new
 
 {项目名}/
-├── bible.md            ← World/characters/locations/items (8 fixed categories)
-├── outline.md          ← Proposition/structure/chapters/foreshadowing roadmap
-├── state.md            ← Current progress/stage/staged content
-├── rules.md            ← Project constraints + style reference (e.g., `风格参考：authors/cold_hard_school.md`)
-├── changelog.md        ← Change log
+├── bible.md                ← World/characters/locations/items (8 fixed categories)
+├── outline.md              ← Proposition/structure/chapters/foreshadowing roadmap
+├── state.md                ← Current progress/stage/staged content (cross-session recovery)
+├── rules.md                ← Project constraints + style reference (§7) + overrides (§8)
+├── changelog.md            ← Change log (appended after each save/revision)
 └── chapters/chapter_XX.md
 ```
 
@@ -92,6 +99,40 @@ Stage-specific loading:
 
 **Exception**: `【存档下班】` executes directly without two-step (user-initiated = confirmed)
 
+## Changelog Format
+
+Each save/revision appends to `changelog.md`:
+
+**Save format:**
+```markdown
+## [日期时间]
+- 写入章节：chapters/chapter_XX.md
+- 当前章节：[state.md 当前章节]
+- 剧情进度：[大纲预设 + 实际摘要]
+- 最后一句话：[state.md 最后一句]
+- 下一步计划：[state.md 下一步]
+- bible.md 更新：[新增/修改条目 or "无"]
+- outline.md 偏差：[新增偏差 or "无"]
+```
+
+**Revision format:**
+```markdown
+## [日期时间]（修订）
+- 修订章节：chapters/chapter_XX.md
+- 修订内容：[一句话描述]
+- bible.md 更新：[受影响条目 or "无"]
+- outline.md 更新：[受影响条目 or "无"]
+- 后续章节影响：[受影响章节 or "无"]
+```
+
+**Style switch format:**
+```markdown
+## [日期时间]（风格切换）
+- 旧风格：authors/xxx.md
+- 新风格：authors/yyy.md
+- 切换原因：[用户说明]
+```
+
 ## Critical Rules
 
 1. **NEVER** write to chapters without user confirmation
@@ -106,6 +147,46 @@ Stage-specific loading:
 10. Append violation cases to rulelog.md when user points out errors
 11. **Memory conflict resolution**: If Memory records conflict with bible.md/state.md, **trust the .md files**
 12. **Style samples must be user-provided or confirmed** - assistant cannot invent style samples
+
+## Cross-Session Recovery
+
+`state.md` contains "阶段暂存内容" field for mid-stage content recovery across sessions:
+
+| Stage | Staged Content |
+|-------|---------------|
+| 构思 | Selected proposal number + core conflict (1 sentence) |
+| 草稿 | Draft summary (3-5 sentences: scene/characters/turns) |
+| 正文 | Final text summary (3-5 sentences) |
+| 润色 | Polish changes summary (2-3 sentences) |
+
+On `【加载上下文】`: if staged content ≠ "无", prompt user: "上次会话停留在[阶段]阶段，有暂存内容：[摘要]。是否从暂存点继续？"
+
+## Foreshadowing Management (Single Data Source)
+
+**Data source hierarchy:**
+- `outline.md` 伏笔路线图 → **ONLY source** (complete: foreshadowing/bury chapter/recover chapter/method/status)
+- `bible.md` 伏笔索引 → Quick lookup only (keyword + status + reference to outline)
+
+**Rules:**
+- Add foreshadowing: write to `outline.md` first → add index row to `bible.md`
+- Recover foreshadowing: update `outline.md` status to ✅ → sync `bible.md` index
+- **NEVER** add foreshadowing to `bible.md` index that doesn't exist in `outline.md`
+
+## Progress Visualization
+
+After `【加载上下文】`, display progress box:
+
+```
+╔════════════════════════════════════════╗
+║  进度状态                              ║
+╠════════════════════════════════════════╣
+║  章节：chapter_XX (第X章)              ║
+║  阶段：[当前阶段]                      ║
+║  字数：[累计字数]                      ║
+║  大纲：[当前幕名] → [下一幕名]         ║
+║  待回收伏笔：[数量]条                  ║
+╚════════════════════════════════════════╝
+```
 
 ## Rollback Rules
 
