@@ -18,14 +18,17 @@ mutiNovels is a file-driven multi-project novel creation system. It uses `.md` f
 ├── rulelog.md              ← Violation cases (read on demand, NOT auto-injected)
 ├── rulelog_history.md      ← Rule change history (read on demand)
 └── skills/
-    ├── init-project/SKILL.md   ← 【初始化】 workflow
-    ├── load-context/SKILL.md   ← 【加载上下文】 layered loading
-    └── new-chapter/SKILL.md    ← 【新建章节】 creation
+│   ├── init-project/SKILL.md   ← 【初始化】 workflow
+│   ├── load-context/SKILL.md   ← 【加载上下文】 layered loading
+│   └── new-chapter/SKILL.md    ← 【新建章节】 creation
 
 authors/
 ├── _template.md            ← Empty template for new style files
 ├── cold_hard_school.md     ← Shared style template (samples/checklist/anchors)
 └── [custom].md             ← Create new: 【切换风格】 new
+
+source/
+└── 139.txt                 ← Reference material for style analysis
 
 {项目名}/
 ├── bible.md                ← World/characters/locations/items (8 fixed categories)
@@ -34,6 +37,9 @@ authors/
 ├── rules.md                ← Project constraints + style reference (§7) + overrides (§8)
 ├── changelog.md            ← Change log (appended after each save/revision)
 └── chapters/chapter_XX.md
+
+.claude/                    ← Claude Code project configuration
+.mcp.json                   ← MCP server config (filesystem + memorymesh)
 ```
 
 ## Initialization Workflow
@@ -47,20 +53,27 @@ When user inputs `【初始化】`:
 
 ## Layered Loading Strategy
 
-`【加载上下文】` loads files in three layers to avoid context overflow:
+`【加载上下文】` loads files in four layers to avoid context overflow:
 
 | Layer | Files | When |
 |-------|-------|------|
-| **必读层** | state.md, rulelog.md | Always |
+| **必读层** | state.md, rulelog.md, changelog.md (last 3 entries) | Always |
+| **前置章节层** | Previous chapters for plot continuity | Always (except chapter 1) |
 | **阶段层** | Varies by current stage (see novelworkflow.md §指令1) | Based on stage |
-| **章节层** | Last 500 words of current chapter | Always |
+| **章节层** | Current chapter (last 500 words + opening 200 words if >3000字) | Always |
 
-Stage-specific loading:
+**前置章节加载规则**:
+- Chapter 1: No previous chapters
+- Chapter 2: chapter_01 full text
+- Chapters 3-5: Previous 2 chapters full + previous 3 ending summary
+- Chapters 6+: Previous 3 chapters full + chapters 4-5 ending summary
+
+**阶段层加载**:
 - 空闲: outline 卷章+伏笔
-- 构思: outline全文 + bible人物/势力
-- 草稿: outline卷章+偏差 + rules + bible人物/地点/道具
-- 正文: bible全文 + style anchors/samples + outline卷章
-- 润色: style file全文 + rules §8覆盖项
+- 构思: outline全文 + bible人物/势力 + 前置章节层
+- 草稿: outline卷章+偏差 + rules + bible人物/地点/道具 + 前置章节层
+- 正文: bible全文 + style anchors/samples + outline卷章 + 前置章节层
+- 润色: style file全文 + rules §8覆盖项 + 当前章节全文
 
 ## Commands
 
@@ -161,6 +174,31 @@ Each save/revision appends to `changelog.md`:
 
 On `【加载上下文】`: if staged content ≠ "无", prompt user: "上次会话停留在[阶段]阶段，有暂存内容：[摘要]。是否从暂存点继续？"
 
+## Previous Chapter Transition Analysis
+
+When loading context for chapter > 1, analyze previous chapter ending:
+
+```
+【上一章衔接】
+- 章末钩子：[suspense/turning point from last chapter]
+- 在场人物：[characters present at end and their states]
+- 未解决冲突：[unresolved issues from previous chapter]
+- 本章开头建议：[suggestion for natural continuation]
+```
+
+## Continuity Check
+
+After loading previous chapters, output continuity report:
+
+```
+【剧情连续性检查】
+✅/❌ 人物状态连续性：[check character states match previous chapter end]
+✅/❌ 时间线连续性：[check time progresses naturally, no jumps/backwards]
+✅/❌ 场景连续性：[check location transitions reasonably]
+✅/❌ 伏笔状态：[check foreshadowing at correct recovery stage]
+⚠️ Issues: [list specific conflicts if found]
+```
+
 ## Foreshadowing Management (Single Data Source)
 
 **Data source hierarchy:**
@@ -185,6 +223,7 @@ After `【加载上下文】`, display progress box:
 ║  字数：[累计字数]                      ║
 ║  大纲：[当前幕名] → [下一幕名]         ║
 ║  待回收伏笔：[数量]条                  ║
+║  前置章节已加载：[章节列表]            ║
 ╚════════════════════════════════════════╝
 ```
 
@@ -215,3 +254,11 @@ After `【加载上下文】`, display progress box:
 - Select 4 paragraphs from polished text matching samples A-D
 - Compare side-by-side with corresponding style samples
 - Mark each checklist item ✅/❌ with location and suggestions
+
+## MCP Servers
+
+`.mcp.json` configures MCP servers for extended capabilities:
+- **filesystem**: File system access to `/mnt/g/tmpRepo/mutiNovels`
+- **memorymesh**: Memory mesh for persistent context across sessions
+
+These servers are automatically loaded when Claude Code starts in this project.

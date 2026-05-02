@@ -10,9 +10,20 @@
       "Bash(npm search *)",
       "Bash(npm install *)",
       "Bash(memorymesh --version)",
-      "Bash(claude config *)"
+      "Bash(claude config *)",
+      "Bash(memorymesh --help)",
+      "Bash(memorymesh doctor *)",
+      "mcp__filesystem-local__read_text_file",
+      "mcp__filesystem-local__edit_file",
+      "mcp__filesystem-local__write_file"
     ]
   },
+  "enabledMcpjsonServers": [
+    "filesystem",
+    "memorymesh",
+    "filesystem-local",
+    "memorymesh-npx"
+  ],
   "additionalInstructions": [
     ".trae/rules/novelworkflow.md",
     ".trae/rules/templates.md"
@@ -21,9 +32,5 @@
     "init-project": ".trae/skills/init-project/SKILL.md",
     "load-context": ".trae/skills/load-context/SKILL.md",
     "new-chapter": ".trae/skills/new-chapter/SKILL.md"
-  },
-  "enabledMcpjsonServers": [
-    "filesystem",
-    "memorymesh"
-  ]
+  }
 }
