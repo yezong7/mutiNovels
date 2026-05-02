@@ -15,7 +15,8 @@
       "Bash(memorymesh doctor *)",
       "mcp__filesystem-local__read_text_file",
       "mcp__filesystem-local__edit_file",
-      "mcp__filesystem-local__write_file"
+      "mcp__filesystem-local__write_file",
+      "mcp__filesystem-local__search_files"
     ]
   },
   "enabledMcpjsonServers": [
