@@ -1,0 +1,203 @@
+{
+  "main": {
+    "id": "236fb7c77ae31935",
+    "type": "split",
+    "children": [
+      {
+        "id": "c5793d72cf9619a6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0d12edf1b99866e6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapter_02.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "chapter_02"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "1b6111914b3385ad",
+    "type": "split",
+    "children": [
+      {
+        "id": "0d933ea4caaf4765",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "97b7f414da6aab32",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "6155ab7eb25fd592",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "6b260155a45761bf",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "462189c2632ca5e7",
+    "type": "split",
+    "children": [
+      {
+        "id": "85126ffc17b9cfd1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "39d494ea70154128",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "chapter_02.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "chapter_02 的反向链接列表"
+            }
+          },
+          {
+            "id": "05d9b24291b75a09",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "chapter_02.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "chapter_02 的出链列表"
+            }
+          },
+          {
+            "id": "2c5e2220208d409f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "49f03d46ef1424aa",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "52e4cdd7e01c20e9",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "chapter_02.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "chapter_02 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "0d12edf1b99866e6",
+  "lastOpenFiles": [
+    "chapter_01.md",
+    "chapter_41.md",
+    "chapter_40.md",
+    "chapter_39.md",
+    "chapter_38.md",
+    "chapter_44.md",
+    "chapter_50.md",
+    "chapter_02.md",
+    "chapter_68.md",
+    "chapter_67.md",
+    "chapter_65.md",
+    "chapter_63.md",
+    "chapter_55.md",
+    "chapter_69.md"
+  ]
+}
