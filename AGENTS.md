@@ -11,10 +11,6 @@ The "entrypoints" are `.md` files; the "codebase" is prose.
 - `.trae/rules/novelworkflow.md` — complete four-phase workflow spec
 - `.trae/rules/templates.md` — mandatory file structure templates for bible/outline/state/rules
 
-Other rule files (read on demand):
-- `.trae/rulelog.md` — violation cases to avoid repeating (read on `【加载上下文】`)
-- `.trae/rulelog_history.md` — rule change history (read on demand only)
-
 ## Skills (load on demand via the `skill` tool)
 
 Three skills in `.opencode/skills/`:
@@ -53,7 +49,6 @@ Each subdirectory under root is an independent novel project (e.g., `project1/`,
 | `【回退】` | Rollback 1 stage max |
 | `【切换风格】xxx.md` | Switch author style in rules.md §7 |
 | `【新建章节】` | Create next chapter file |
-| `【批量构思】X-Y章` | Batch ideation workflow |
 
 ## CRITICAL: Never write chapters without user confirmation
 
@@ -68,7 +63,7 @@ Two-step confirmation: user says trigger → agent echoes back "收到确认，�
 
 ## Layered loading strategy (`【加载上下文】`)
 
-1. **必读层** (always): state.md, rulelog.md, changelog.md (last 3 entries)
+1. **必读层** (always): state.md, changelog.md (last 3 entries)
 2. **前置章节层**: previous chapters for continuity (see table below)
 3. **阶段层**: varies by stage
 4. **章节层**: current chapter last 500 + first 200 words
@@ -98,3 +93,5 @@ Three distinct formats: save, revision, style switch. Each has specific required
 - 正文 phase must run the 7-point consistency checklist
 - 润色 phase must run the 12-point style calibration with sample comparison
 - Before 构思, must read outline.md — never enter ideation blind
+- Before archiving (存档), verify chapter word count meets `rules.md §5` minimum (default 5000 chars). Warn if below.
+- 润色 skill is style-aware: loads author style file first, filters universal rules through style constraints, runs anti-pattern check before output
