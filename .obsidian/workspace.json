@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "ad0327d054f8b57c",
+        "id": "c0c8d3e7cb733dac",
         "type": "tabs",
         "children": [
           {
-            "id": "b3445e7b885a61fc",
+            "id": "0781440919957428",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "project1/outline.md",
-                "mode": "preview",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "outline"
+              "title": "新标签页"
             }
           }
         ]
@@ -183,8 +179,15 @@
       "bases:新建数据库": false
     }
   },
-  "active": "b3445e7b885a61fc",
+  "active": "27f88f8959bbb6e5",
   "lastOpenFiles": [
+    "project1_part2/chapters/chapter_03.md",
+    "project1_part2/outline.md",
+    "project1_part2/changelog.md",
+    "project1_part2/chapters/chapter_05.md",
+    "project1_part2/chapters/chapter_02.md",
+    "project1_part2/chapters/chapter_01.md",
+    "project1/outline.md",
     "project1/state.md.tmp.59381.1777822451814",
     "project1/changelog.md.tmp.59381.1777822435689",
     "project1/bible.md.tmp.59381.1777822393864",
@@ -195,7 +198,6 @@
     "project1/chapters/chapter_55.md.tmp.59381.1777822038034",
     "project1/chapters/chapter_54.md.tmp.59381.1777822037445",
     "project1/chapters/chapter_53.md.tmp.59381.1777822036874",
-    "project1/chapters/chapter_52.md.tmp.59381.1777822036267",
     "project1/chapters/chapter_51.md",
     "project1/chapters/chapter_50.md",
     "project1/chapters/chapter_49.md",
@@ -214,12 +216,6 @@
     "project1/chapters/chapter_03.md",
     "project1/chapters/chapter_40.md",
     "project1/chapters/chapter_39.md",
-    "project1/chapters/chapter_38.md",
-    "project1/chapters/chapter_37.md",
-    "project1/chapters/chapter_36.md",
-    "project1/chapters/chapter_35.md",
-    "project1/chapters/chapter_34.md",
-    "project1/chapters/chapter_33.md",
-    "project1/chapters/chapter_32.md"
+    "project1/chapters/chapter_38.md"
   ]
 }
